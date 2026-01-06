@@ -1,0 +1,17 @@
+{
+  "name": "fpilot-scraper",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.11",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "start": "bun index.js",
+    "check": "biome check ."
+  }
+}
