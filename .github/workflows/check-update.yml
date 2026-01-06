@@ -107,9 +107,7 @@ jobs:
           cat > release_notes.md << EOF
           ## FilePilot ${VERSION}
 
-          This release contains **FilePilot ${VERSION}**.
-
-          📋 **Release Notes**: https://filepilot.tech/starlog
+          **Release Notes**: https://filepilot.tech/starlog
 
           ---
 
