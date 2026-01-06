@@ -93,13 +93,15 @@ jobs:
         run: |
           VERSION="${{ needs.check.outputs.version }}"
           TAG="${{ needs.check.outputs.tag }}"
+          # Extract version number (e.g., "v0.6.5" from "Beta v0.6.5")
+          VERSION_ANCHOR=$(echo "$VERSION" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+')
           REPO_URL="${{ github.server_url }}/${{ github.repository }}"
           RUN_URL="${REPO_URL}/actions/runs/${{ github.run_id }}"
 
           cat > release_notes.md << EOF
           ## FilePilot ${VERSION}
 
-          **Release Notes**: https://filepilot.tech/starlog
+          **Release Notes**: https://filepilot.tech/starlog#${VERSION_ANCHOR}
 
           ---
 
