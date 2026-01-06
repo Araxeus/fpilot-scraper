@@ -89,20 +89,12 @@ jobs:
         with:
           name: fpilot-exe
 
-      - name: Get job ID
-        id: job_id
-        run: |
-          JOB_ID=$(curl -s -H "Authorization: Bearer ${{ github.token }}" \
-            "${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs" \
-            | jq -r '.jobs[] | select(.name == "Create Release") | .id')
-          echo "id=$JOB_ID" >> $GITHUB_OUTPUT
-
       - name: Generate release notes
         run: |
           VERSION="${{ needs.check.outputs.version }}"
           TAG="${{ needs.check.outputs.tag }}"
           REPO_URL="${{ github.server_url }}/${{ github.repository }}"
-          RUN_URL="${REPO_URL}/actions/runs/${{ github.run_id }}/job/${{ steps.job_id.outputs.id }}"
+          RUN_URL="${REPO_URL}/actions/runs/${{ github.run_id }}"
 
           cat > release_notes.md << EOF
           ## FilePilot ${VERSION}
