@@ -4,7 +4,7 @@ console.log('Initializing fpilot updater...');
 
 const downloadPageUrl = 'https://filepilot.tech/download';
 const downloadUrl = 'https://filepilot.tech/download/latest';
-const versionSelector = 'p.download-button-info';
+const versionSelector = 'a.download-version';
 const ExeName = 'FPilot.exe';
 
 const currentVersion = (await Bun.file('version.txt').text()).trim();
