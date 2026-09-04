@@ -2,28 +2,14 @@ import { appendFile } from 'node:fs/promises';
 
 console.log('Initializing fpilot updater...');
 
-const downloadPageUrl = 'https://filepilot.tech/download';
+const jsBundleUrl = 'https://filepilot.tech/core.js';
 const downloadUrl = 'https://filepilot.tech/download/latest';
-const versionSelector = 'a.download-version';
 const ExeName = 'FPilot.exe';
 
 const currentVersion = (await Bun.file('version.txt').text()).trim();
 
-const response = await fetch(downloadPageUrl);
-
-const rewriter = new HTMLRewriter();
-
-let version = '';
-rewriter.on(versionSelector, {
-  text(textNode) {
-    const text = textNode.text.trim();
-    if (text.startsWith('Beta')) {
-      version = text;
-      console.log(`Latest version: ${version}`);
-    }
-  },
-});
-await rewriter.transform(response).blob();
+const jsBundle = await fetch(jsBundleUrl).then((res) => res.text());
+const version = jsBundle.match(/version: "([^"]+)"/)?.[1];
 
 if (!version) {
   console.error('Failed to parse version from download page.');
@@ -31,7 +17,7 @@ if (!version) {
 }
 
 if (version === currentVersion) {
-  console.log('No new version available. Exiting.');
+  console.log(`Current version: ${currentVersion}, New version: ${version}\nNo new version available. Exiting.`);
   process.exit(0);
 }
 
